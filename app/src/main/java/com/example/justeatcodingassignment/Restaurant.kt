@@ -1,12 +1,14 @@
 package com.example.justeatcodingassignment
 
+import com.squareup.moshi.Json
+
 data class RestaurantResponse(
     val restaurants: List<Restaurant>, val resultCount: Int? = null, val area: String? = null
 )
 
 data class Restaurant(
     val name: String?,
-    val cuisineDetail: List<CuisineDetail>?,
+    @Json(name = "cuisines") val cuisineDetail: List<CuisineDetail>?,
     val rating: Rating?,
     val address: Address?
 )
