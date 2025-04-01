@@ -17,9 +17,9 @@ class MainViewModel : ViewModel() {
             try {
                 // Fetch restaurant response based on postcode
                 val response = RetrofitClient.justEatAPIService.getRestaurantsByPostcode(postcode)
-                // Map the result to display name
+                // Map the result to display name, star rating and address
                 _restaurantData.value = response.restaurants.map { restaurant ->
-                    "${restaurant.name}"
+                    "${restaurant.name}     Rating: ${restaurant.rating?.starRating} Stars   Address: ${restaurant.address?.firstLine}"
                 }
             } catch (e: Exception) {
                 // Handle API errors
