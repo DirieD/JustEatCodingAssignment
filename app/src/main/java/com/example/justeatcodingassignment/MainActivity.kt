@@ -5,18 +5,24 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,16 +36,30 @@ class MainActivity : ComponentActivity() {
         setContent {
             JustEatCodingAssignmentTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    RestaurantListScreen(
+                    JustEatApp(
                         viewModel = viewModel,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
         }
+    }
+}
 
-        // Trigger the API request with sample postcode
-        viewModel.searchRestaurants("EC4M 7RF")
+@Composable
+fun JustEatApp(viewModel: MainViewModel, modifier: Modifier) {
+    var searchText by remember { mutableStateOf("") }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(4.dp)
+    ) {
+        SearchRestaurant(
+            text = searchText,
+            onTextChange = { newText -> searchText = newText },
+            onSearchClick = { viewModel.searchRestaurants(searchText) })
+
+        RestaurantListScreen(viewModel = viewModel)
     }
 }
 
@@ -64,6 +84,23 @@ fun RestaurantListScreen(viewModel: MainViewModel, modifier: Modifier = Modifier
     }
 }
 
+@Composable
+fun SearchRestaurant(text: String, onTextChange: (String) -> Unit, onSearchClick: () -> Unit) {
+
+    Row {
+        TextField(
+            value = text,
+            onValueChange = onTextChange,
+            label = { Text(text = "Search Postcode") },
+            modifier = Modifier.padding(10.dp)
+        )
+        Button(
+            onClick = onSearchClick,
+            modifier = Modifier.padding(top = 15.dp)
+        ) { Text(text = "Search") }
+    }
+}
+
 
 @Composable
 fun RestaurantItem(restaurantName: String) {
@@ -84,6 +121,6 @@ fun RestaurantItem(restaurantName: String) {
 @Composable
 fun RestaurantListPreview() {
     JustEatCodingAssignmentTheme {
-        RestaurantListScreen(viewModel = MainViewModel())
+        JustEatApp(viewModel = MainViewModel(), modifier = Modifier)
     }
 }
