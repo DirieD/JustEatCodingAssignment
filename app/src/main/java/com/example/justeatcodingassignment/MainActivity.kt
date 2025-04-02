@@ -77,7 +77,12 @@ fun RestaurantListScreen(viewModel: MainViewModel, modifier: Modifier = Modifier
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(limitedRestaurants) { restaurant ->
-                    RestaurantItem(restaurantName = restaurant)
+                    RestaurantItem(
+                        restaurantName = restaurant.name,
+                        restaurantCuisine = restaurant.cuisine,
+                        restaurantRating = restaurant.rating,
+                        restaurantAddress = restaurant.address
+                    )
                 }
             }
         }
@@ -103,7 +108,12 @@ fun SearchRestaurant(text: String, onTextChange: (String) -> Unit, onSearchClick
 
 
 @Composable
-fun RestaurantItem(restaurantName: String) {
+fun RestaurantItem(
+    restaurantName: String,
+    restaurantCuisine: String,
+    restaurantRating: Number,
+    restaurantAddress: String
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -111,7 +121,22 @@ fun RestaurantItem(restaurantName: String) {
     ) {
         Text(
             text = restaurantName,
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(8.dp),
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Text(
+            text = "Cuisine: $restaurantCuisine",
+            modifier = Modifier.padding(8.dp),
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Text(
+            text = "Rating: $restaurantRating",
+            modifier = Modifier.padding(8.dp),
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Text(
+            text = "Address: $restaurantAddress",
+            modifier = Modifier.padding(8.dp),
             style = MaterialTheme.typography.bodyLarge
         )
     }
