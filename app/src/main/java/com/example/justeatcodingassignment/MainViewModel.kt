@@ -9,28 +9,29 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
 
     private val _restaurantData =
-        MutableLiveData<List<String>>(emptyList()) // List for restaurant data
-    val restaurantData: LiveData<List<String>> get() = _restaurantData
+        MutableLiveData<List<RestaurantUIModel>>()
+    val restaurantData: LiveData<List<RestaurantUIModel>> get() = _restaurantData
 
     fun searchRestaurants(postcode: String) {
         viewModelScope.launch {
             try {
-                // Fetch restaurant response based on postcode
                 val response = RetrofitClient.justEatAPIService.getRestaurantsByPostcode(postcode)
-                // Map the result to display name, star rating, address and cuisine
-                _restaurantData.value = response.restaurants.map { restaurant ->
-                    "${restaurant.name}     Rating: ${restaurant.rating?.starRating} Stars   Address: ${restaurant.address?.firstLine}  Cuisine: ${
-                        getCuisineList(
-                            restaurant
+                _restaurantData.value = response.restaurants
+                    .filter { it.name != null }
+                    .map { restaurant ->
+                        RestaurantUIModel(
+                            name = restaurant.name ?: "Unknown",
+                            rating = restaurant.rating?.starRating ?: 0f,
+                            address = restaurant.address?.firstLine ?: "Unknown",
+                            cuisine = getCuisineList(restaurant)
                         )
-                    }"
-                }
+                    }
             } catch (e: Exception) {
-                // Handle API errors
                 _restaurantData.value = emptyList()
             }
         }
     }
+
 
     private fun getCuisineList(restaurant: Restaurant): String {
         val excludedKeywords =
@@ -58,5 +59,4 @@ class MainViewModel : ViewModel() {
             ?.take(3) // Limit to first 3 cuisines
             ?.joinToString(", ") ?: "Unknown"
     }
-
 }
