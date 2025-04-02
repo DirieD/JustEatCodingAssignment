@@ -17,11 +17,13 @@ class MainViewModel : ViewModel() {
             try {
                 // Fetch restaurant response based on postcode
                 val response = RetrofitClient.justEatAPIService.getRestaurantsByPostcode(postcode)
-                // Map the result to display name, star rating and address
+                // Map the result to display name, star rating, address and cuisine
                 _restaurantData.value = response.restaurants.map { restaurant ->
-                    val cuisineNames = restaurant.cuisineDetail?.take(3)
-                        ?.joinToString(", ") { it.name ?: "Unknown" }
-                    "${restaurant.name}     Rating: ${restaurant.rating?.starRating} Stars   Address: ${restaurant.address?.firstLine}  Cuisine: $cuisineNames"
+                    "${restaurant.name}     Rating: ${restaurant.rating?.starRating} Stars   Address: ${restaurant.address?.firstLine}  Cuisine: ${
+                        getCuisineList(
+                            restaurant
+                        )
+                    }"
                 }
             } catch (e: Exception) {
                 // Handle API errors
@@ -29,4 +31,32 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
+    private fun getCuisineList(restaurant: Restaurant): String {
+        val excludedKeywords =
+            listOf(
+                "Halal",
+                "Low Delivery Fee",
+                "Collect stamps",
+                "Deals",
+                "£8 off",
+                "Local Legends",
+                "Freebies",
+                "Healthy"
+            ) //These are all I could locate - could be missing some
+
+        return restaurant.cuisineDetail
+            ?.mapNotNull { it.name } // Extract cuisine names
+            ?.filter { cuisine ->
+                excludedKeywords.none {
+                    cuisine.contains(
+                        it,
+                        ignoreCase = true
+                    )
+                }
+            }
+            ?.take(3) // Limit to first 3 cuisines
+            ?.joinToString(", ") ?: "Unknown"
+    }
+
 }
