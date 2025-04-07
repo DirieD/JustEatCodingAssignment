@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">JustEatCodingAssignment</string>
+
+    <string name="restaurants_near">Restaurants Near You</string>
+    <string name="restaurants_not_found">No restaurants found</string>
+    <string name="search_postcode">Search Postcode</string>
+    <string name="search_text">Search</string>
 </resources>

@@ -32,8 +32,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.justeatcodingassignment.R
 import com.example.justeatcodingassignment.presentation.viewmodel.MainViewModel
 import com.example.justeatcodingassignment.ui.theme.JustEatCodingAssignmentTheme
 
@@ -77,12 +79,12 @@ fun RestaurantList(viewModel: MainViewModel, modifier: Modifier = Modifier) {
     val restaurants by viewModel.restaurantData.observeAsState(emptyList())
 
     Column(modifier = modifier.padding(16.dp)) {
-        Text(text = "Restaurants Near You", style = MaterialTheme.typography.headlineSmall)
+        Text(text = stringResource(R.string.restaurants_near), style = MaterialTheme.typography.headlineSmall)
 
         val limitedRestaurants = restaurants.take(10) // Limits to 10
 
         if (limitedRestaurants.isEmpty()) {
-            Text(text = "No restaurants found", modifier = Modifier.padding(top = 8.dp))
+            Text(text = stringResource(R.string.restaurants_not_found), modifier = Modifier.padding(top = 8.dp))
         } else {
             LazyColumn(
                 modifier = Modifier
@@ -109,14 +111,14 @@ fun SearchRestaurant(text: String, onTextChange: (String) -> Unit, onSearchClick
         TextField(
             value = text,
             onValueChange = onTextChange,
-            label = { Text(text = "Search Postcode") },
+            label = { Text(text = stringResource(R.string.search_postcode)) },
             modifier = Modifier.weight(1f)
         )
         Spacer(modifier = Modifier.width(8.dp))
         Button(
             onClick = onSearchClick,
             modifier = Modifier.align(Alignment.CenterVertically)
-        ) { Text(text = "Search") }
+        ) { Text(text = stringResource(R.string.search_text)) }
     }
 }
 
