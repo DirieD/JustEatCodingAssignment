@@ -1,4 +1,4 @@
-package com.example.justeatcodingassignment
+package com.example.justeatcodingassignment.presentation.model
 
 data class RestaurantUIModel(
     val name: String,

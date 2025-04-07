@@ -1,5 +1,6 @@
-package com.example.justeatcodingassignment
+package com.example.justeatcodingassignment.data.network
 
+import com.example.justeatcodingassignment.data.model.RestaurantResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 

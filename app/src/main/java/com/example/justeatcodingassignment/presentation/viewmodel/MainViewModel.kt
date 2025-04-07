@@ -1,9 +1,12 @@
-package com.example.justeatcodingassignment
+package com.example.justeatcodingassignment.presentation.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.justeatcodingassignment.data.model.Restaurant
+import com.example.justeatcodingassignment.data.network.RetrofitClient
+import com.example.justeatcodingassignment.presentation.model.RestaurantUIModel
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {

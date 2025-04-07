@@ -1,4 +1,4 @@
-package com.example.justeatcodingassignment
+package com.example.justeatcodingassignment.data.network
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
