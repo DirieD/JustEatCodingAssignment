@@ -1,4 +1,4 @@
-package com.example.justeatcodingassignment
+package com.example.justeatcodingassignment.presentation.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.justeatcodingassignment.presentation.viewmodel.MainViewModel
 import com.example.justeatcodingassignment.ui.theme.JustEatCodingAssignmentTheme
 
 class MainActivity : ComponentActivity() {

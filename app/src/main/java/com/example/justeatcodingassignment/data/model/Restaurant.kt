@@ -1,4 +1,4 @@
-package com.example.justeatcodingassignment
+package com.example.justeatcodingassignment.data.model
 
 import com.squareup.moshi.Json
 
