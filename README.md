@@ -25,11 +25,12 @@ This project uses Gradle for dependency managment, and the following key depende
 - Open in Android Studio
 - Sync gradle
 - Run the app (via emulator or by connecting to an android device)
+- The app requires a minimum SDK version of 24 with a compile SDK of 35. For reference I ran this application on a Pixel 8 Pro.
 
 ✍️ Assumptions and Improvements
 In terms of assumptions or things that were made unclear there was only one thing that required clarification,
 when it came time to displaying the types of cuisine the endpoint returned a lot of terms such as "Halal" or "Low Delivery fee",
-these were clarified for me upon communicating with a member from the justeat team.
+I was unsure if these also counted as types of cuisine, this was clarified for me upon communicating with a member from the justeat team.
 
 In terms of improvements:
 - UI enhancements: adding animations to the composables when they expand to seem more dynamic for a better experience. Also implementing a theme that echoes the colour scheme of the Just Eat application
