@@ -7,15 +7,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.justeatcodingassignment.JustEatApplication
-import com.example.justeatcodingassignment.data.RestaurantRepository
 import com.example.justeatcodingassignment.data.model.Restaurant
+import com.example.justeatcodingassignment.domain.GetRestaurantsByPostcodeUseCase
 import com.example.justeatcodingassignment.presentation.model.RestaurantUIModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val repository: RestaurantRepository
+    private val getRestaurantsByPostcodeUseCase: GetRestaurantsByPostcodeUseCase
 ) : ViewModel() {
 
     private val _restaurantData =
@@ -25,8 +25,9 @@ class MainViewModel(
     fun searchRestaurants(postcode: String) {
         viewModelScope.launch {
             try {
-                val restaurants = repository.getRestaurants(postcode)
-                _restaurantData.value = restaurants
+                val restaurants =
+                getRestaurantsByPostcodeUseCase(postcode)
+                    _restaurantData.value = restaurants
                     .filter { it.name != null }
                     .map { restaurant ->
                         RestaurantUIModel(
@@ -69,13 +70,13 @@ class MainViewModel(
             ?.take(3) // Limit to first 3 cuisines
             ?.joinToString(", ") ?: "Unknown"
     }
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as JustEatApplication)
                 val repository = application.container.restaurantRepository
-                MainViewModel(repository)
+                val useCase = GetRestaurantsByPostcodeUseCase(repository)
+                MainViewModel(useCase)
             }
         }
     }
