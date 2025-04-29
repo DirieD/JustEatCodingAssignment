@@ -14,27 +14,22 @@ import com.example.justeatcodingassignment.presentation.viewmodel.MainViewModel
 import com.example.justeatcodingassignment.ui.theme.JustEatCodingAssignmentTheme
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             JustEatCodingAssignmentTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    JustEatApp(
-                        viewModel = viewModel,
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    JustEatApp(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun RestaurantListPreview() {
     JustEatCodingAssignmentTheme {
         JustEatApp(viewModel = MainViewModel(), modifier = Modifier)
     }
-}
+}*/

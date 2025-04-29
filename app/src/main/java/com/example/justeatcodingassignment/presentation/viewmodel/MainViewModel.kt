@@ -1,7 +1,13 @@
 package com.example.justeatcodingassignment.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.justeatcodingassignment.JustEatApplication
+import com.example.justeatcodingassignment.data.RestaurantRepository
 import com.example.justeatcodingassignment.data.model.Restaurant
 import com.example.justeatcodingassignment.data.network.RetrofitClient
 import com.example.justeatcodingassignment.presentation.model.RestaurantUIModel
@@ -9,7 +15,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(
+    private val repository: RestaurantRepository
+) : ViewModel() {
 
     private val _restaurantData =
         MutableStateFlow<List<RestaurantUIModel>>(emptyList())
@@ -18,8 +26,8 @@ class MainViewModel : ViewModel() {
     fun searchRestaurants(postcode: String) {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.justEatAPIService.getRestaurantsByPostcode(postcode)
-                _restaurantData.value = response.restaurants
+                val restaurants = repository.getRestaurants(postcode)
+                _restaurantData.value = restaurants
                     .filter { it.name != null }
                     .map { restaurant ->
                         RestaurantUIModel(
@@ -61,5 +69,15 @@ class MainViewModel : ViewModel() {
             }
             ?.take(3) // Limit to first 3 cuisines
             ?.joinToString(", ") ?: "Unknown"
+    }
+
+    companion object {
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val application = (this[APPLICATION_KEY] as JustEatApplication)
+                val repository = application.container.restaurantRepository
+                MainViewModel(repository)
+            }
+        }
     }
 }

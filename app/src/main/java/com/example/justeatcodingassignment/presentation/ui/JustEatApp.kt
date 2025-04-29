@@ -13,7 +13,11 @@ import androidx.compose.ui.unit.dp
 import com.example.justeatcodingassignment.presentation.viewmodel.MainViewModel
 
 @Composable
-fun JustEatApp(viewModel: MainViewModel, modifier: Modifier = Modifier) {
+fun JustEatApp(modifier: Modifier = Modifier) {
+    val viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+        factory = MainViewModel.Factory
+    )
+
     var searchText by remember { mutableStateOf("") }
 
     Column(
@@ -29,3 +33,4 @@ fun JustEatApp(viewModel: MainViewModel, modifier: Modifier = Modifier) {
         RestaurantList(viewModel = viewModel)
     }
 }
+
