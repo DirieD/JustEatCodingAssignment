@@ -1,19 +1,19 @@
 package com.example.justeatcodingassignment.presentation.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.justeatcodingassignment.data.model.Restaurant
 import com.example.justeatcodingassignment.data.network.RetrofitClient
 import com.example.justeatcodingassignment.presentation.model.RestaurantUIModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
     private val _restaurantData =
-        MutableLiveData<List<RestaurantUIModel>>()
-    val restaurantData: LiveData<List<RestaurantUIModel>> get() = _restaurantData
+        MutableStateFlow<List<RestaurantUIModel>>(emptyList())
+    val restaurantData: StateFlow<List<RestaurantUIModel>> = _restaurantData
 
     fun searchRestaurants(postcode: String) {
         viewModelScope.launch {

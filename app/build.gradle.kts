@@ -61,21 +61,21 @@ dependencies {
     implementation(libs.androidx.material3)
 
     //Compose ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     //Livedata
-    implementation("androidx.compose.runtime:runtime-livedata:1.7.8")
+    implementation(libs.androidx.compose.runtime.livedata)
 
     //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation(libs.retrofit)
 
     //Moshi
-    implementation("com.squareup.moshi:moshi:1.14.0")
-    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
 
     //OKhttp Interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation(libs.okhttp.logging.interceptor)
 
 
     testImplementation(libs.junit)
