@@ -9,12 +9,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.unit.dp
 import com.example.justeatcodingassignment.presentation.viewmodel.MainViewModel
 
 @Composable
 fun JustEatApp(modifier: Modifier = Modifier) {
-    val viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel(
+    val viewModel: MainViewModel = viewModel(
         factory = MainViewModel.Factory
     )
 
