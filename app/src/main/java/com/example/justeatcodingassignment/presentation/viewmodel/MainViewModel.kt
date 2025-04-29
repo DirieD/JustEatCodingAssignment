@@ -9,7 +9,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.justeatcodingassignment.JustEatApplication
 import com.example.justeatcodingassignment.data.RestaurantRepository
 import com.example.justeatcodingassignment.data.model.Restaurant
-import com.example.justeatcodingassignment.data.network.RetrofitClient
 import com.example.justeatcodingassignment.presentation.model.RestaurantUIModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
